@@ -1,0 +1,391 @@
+<!-- members/home.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  /* Basic Styling & Colors */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6; /* Light gray background */
+  }
+
+  /* Navbar */
+  nav {
+    background-color: #004d99; /* Darker blue for a professional look */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  nav a {
+    color: #ffffff;
+    padding: 18px 25px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  nav a:hover {
+    background-color: #003366;
+  }
+
+  /* Hero Section */
+  .hero {
+    height: 500px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      {% if site_settings and site_settings.background_image %}
+        url("{{ site_settings.background_image.url }}") center/cover no-repeat;
+      {% else %}
+        url("{% static 'images/hero-bg.jpg' %}") center/cover no-repeat;
+      {% endif %}
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    animation: fadeIn 2s ease-in-out;
+  }
+  .hero h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+  }
+  .hero p {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
+  /* Section Titles */
+  section {
+    padding: 60px 0;
+  }
+  section h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #333;
+    position: relative;
+  }
+  section h2::after {
+    content: '';
+    width: 80px;
+    height: 4px;
+    background-color: #007bff;
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
+
+  /* Card Container */
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+  }
+
+  /* Individual Card */
+  .card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Ensures image fills the space without distortion */
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  .card h3 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #004d99;
+  }
+  .card p {
+    color: #666;
+    margin-bottom: 10px;
+  }
+  .card .meta-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  .card .meta-info span {
+    font-weight: bold;
+  }
+
+  /* Button */
+  .btn {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Google Maps and Developer sections */
+  #location, #developer {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    padding: 40px;
+    max-width: 90%;
+  }
+
+  #developer a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  #developer a:hover {
+    color: #0056b3;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Slideshow Section */
+  .slideshow-container {
+    max-width: 100%;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  .slideshow-image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: none;
+  }
+  .slideshow-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+  }
+
+  /* Success Stories Section */
+  .success-story-card {
+    background: #e9f5ff; /* Light blue background */
+    border: 1px solid #cce5ff;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .success-story-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #007bff;
+  }
+  .success-story-card h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #004d99;
+  }
+  .success-story-card p {
+    font-style: italic;
+    color: #555;
+    margin-top: 10px;
+  }
+
+</style>
+
+<!-- Navbar -->
+<nav>
+  <div class="container" style="display:flex; align-items:center; justify-content:space-between;">
+    <a href="{% url 'home' %}">
+      {% if site_settings and site_settings.logo %}
+        <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" style="height:50px;">
+      {% else %}
+        <span style="font-size: 1.5rem; font-weight: bold;">EduBridge</span>
+      {% endif %}
+    </a>
+    <div>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'course_list' %}">Courses</a>
+      <a href="{% url 'teachers_list' %}">Teachers</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero">
+  <h1>Welcome to EduBridge</h1>
+  <p>Your path to knowledge and success</p>
+  <a href="{% url 'course_list' %}" class="btn">Browse Courses</a>
+</div>
+
+<!-- Slideshow Section -->
+{% if slideshow_images %}
+<section>
+  <h2>Image Gallery</h2>
+  <div class="slideshow-container">
+    {% for image in slideshow_images %}
+    <img class="slideshow-image" src="{{ image.image.url }}" alt="{{ image.caption }}">
+    {% endfor %}
+    <div class="slideshow-caption"></div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Courses Section -->
+<section>
+  <h2>Popular Courses</h2>
+  <div class="card-container">
+    {% for course in courses %}
+      <div class="card">
+        {% if course.course_image %}
+          <img src="{{ course.course_image.url }}" alt="{{ course.title }}">
+        {% else %}
+          <img src="{% static 'images/default_course.jpg' %}" alt="{{ course.title }}">
+        {% endif %}
+        <h3>{{ course.title }}</h3>
+        <p>{{ course.description|truncatewords:15 }}</p>
+        <div class="meta-info">
+          <span>মূল্য: {{ course.price }} টাকা</span>
+          <span>সময়: {{ course.duration }}</span>
+        </div>
+        <p>প্রশিক্ষক: {{ course.instructor.name }}</p>
+        <a href="{% url 'course_detail' course.id %}" class="btn">Details</a>
+      </div>
+    {% empty %}
+      <p style="text-align: center;">No courses available at the moment.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Teachers Section -->
+<section>
+  <h2>Meet Our Teachers</h2>
+  <div class="card-container">
+    {% for teacher in teachers %}
+      <div class="card">
+        {% if teacher.photo %}
+          <img src="{{ teacher.photo.url }}" alt="{{ teacher.name }}">
+        {% else %}
+          <img src="{% static 'images/default_teacher.jpg' %}" alt="Teacher">
+        {% endif %}
+        <h3>{{ teacher.name }}</h3>
+        <p>{{ teacher.bio|truncatewords:15 }}</p>
+        <a href="{% url 'teacher_profile' teacher.id %}" class="btn">View Profile</a>
+      </div>
+    {% empty %}
+      <p style="text-align: center;">No teachers found at the moment.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Success Stories Section -->
+{% if success_stories %}
+<section>
+  <h2>Student Success Stories</h2>
+  <div class="card-container">
+    {% for story in success_stories %}
+      <div class="success-story-card">
+        {% if story.photo %}
+          <img src="{{ story.photo.url }}" alt="{{ story.student_name }}">
+        {% else %}
+          <img src="{% static 'images/default_student.jpg' %}" alt="{{ story.student_name }}">
+        {% endif %}
+        <h4>{{ story.student_name }}</h4>
+        <p>"{{ story.story_text|truncatewords:20 }}"</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Google Maps iframe embed without API key -->
+<section id="location">
+  <h2>Our Location</h2>
+  <iframe
+    width="100%"
+    height="400"
+    style="border:0; border-radius: 12px;"
+    loading="lazy"
+    allowfullscreen
+    src="https://www.google.com/maps?q=22.38617772615635,91.83057062572003&hl=en&z=15&output=embed">
+  </iframe>
+</section>
+
+
+<!-- About Developer Section -->
+<section id="developer" style="text-align: center;">
+  <h2>About Developer</h2>
+  <div style="max-width: 600px; margin: 0 auto; font-size: 1.1rem; color: #333;">
+    <p>Hello! I'm <strong>Md Shahadat Hossain</strong>, the developer behind EduBridge.</p>
+    <p>I am passionate about building educational platforms to empower learners everywhere.</p>
+    <p>Contact me:
+      <a href="falahia340371@gmail.com">falahia340371@gmail.com</a> |
+      <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a> |
+      <a href="https://github.com/yourgithub" target="_blank" rel="noopener">GitHub</a> |
+      <a href="https://web.facebook.com/abuabdullah.ahmodmusa/" target="_blank" rel="noopener">Facebook</a>
+    </p>
+  </div>
+</section>
+
+<!-- Slideshow JavaScript -->
+<script>
+  let slideIndex = 0;
+  showSlides();
+
+  function showSlides() {
+    let i;
+    let slides = document.getElementsByClassName("slideshow-image");
+    let caption = document.querySelector(".slideshow-caption");
+    if (slides.length === 0) return; // No images to display
+
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {
+      slideIndex = 1;
+    }
+    slides[slideIndex - 1].style.display = "block";
+    caption.textContent = slides[slideIndex - 1].alt;
+    setTimeout(showSlides, 4000); // Change image every 4 seconds
+  }
+</script>
+
+{% endblock %}

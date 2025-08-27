@@ -1,0 +1,16 @@
+<!-- templates/courses/course_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ course.title }}</h1>
+  <p>{{ course.description }}</p>
+  <p><strong>Instructor:</strong> {{ course.instructor }}</p>
+  <p><strong>Duration:</strong> {{ course.duration }}</p>
+
+  {% if user.is_authenticated %}
+    <a href="{% url 'enroll_in_course' course.id %}">Enroll in this course</a>
+  {% else %}
+    <p><a href="{% url 'login' %}">Login</a> to enroll.</p>
+  {% endif %}
+{% endblock %}

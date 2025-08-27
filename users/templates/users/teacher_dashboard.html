@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+শিক্ষকের ড্যাশবোর্ড
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-4 shadow-sm">
+                <h2 class="card-title text-center mb-4">স্বাগতম, {{ user.first_name }}!</h2>
+                <p class="text-center text-muted">আপনি একজন শিক্ষক হিসেবে লগইন করেছেন।</p>
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-subtitle mb-3">প্রোফাইলের বিস্তারিত</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>ইউজারনেম:</strong> {{ user.username }}</li>
+                        <li class="list-group-item"><strong>ইমেইল:</strong> {{ user.email }}</li>
+                        <li class="list-group-item"><strong>ইউজারের ধরণ:</strong> {{ user.profile.get_user_type_display }}</li>
+                    </ul>
+                </div>
+                <div class="mt-4 text-center">
+                    <a href="{% url 'edit_profile' %}" class="btn btn-primary me-2">প্রোফাইল এডিট করুন</a>
+                    <a href="{% url 'my_courses' %}" class="btn btn-secondary">আমার কোর্সসমূহ দেখুন</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

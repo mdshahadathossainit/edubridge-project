@@ -1,0 +1,14 @@
+<!-- users/templates/users/profile.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Profile</title>
+</head>
+<body>
+    <h1>Welcome, {{ request.user.username }}</h1>
+    <p>Email: {{ request.user.email }}</p>
+    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+</body>
+</html>
+

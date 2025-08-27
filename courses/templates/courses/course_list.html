@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Available Courses</h2>
+  <ul>
+    {% for course in courses %}
+      <li>
+        <strong>{{ course.title }}</strong><br>
+        {{ course.description }}<br>
+        Instructor: {{ course.instructor }}<br>
+        Duration: {{ course.duration }}<br>
+        <a href="{% url 'enroll_in_course' course.id %}">Enroll</a>
+      </li>
+    {% empty %}
+      <li>No courses available.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

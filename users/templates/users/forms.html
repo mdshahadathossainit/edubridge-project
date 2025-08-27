@@ -1,0 +1,39 @@
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+
+class UserRegistrationForm(UserCreationForm):
+    # Email ফিল্ডের জন্য কাস্টমাইজেশন
+    email = forms.EmailField(required=True, help_text='A valid email address is required.')
+
+    class Meta:
+        model = User
+        # এই ফিল্ডগুলো ফর্মে দেখাবে, password1 এবং password2 হলো পাসওয়ার্ড ভেরিফিকেশনের জন্য
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def save(self, commit=True):
+        # Save method override করে email ঠিকভাবে সেট করা হচ্ছে
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
+
+
+
+class RegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise ValidationError("Passwords do not match")
