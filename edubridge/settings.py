@@ -2,14 +2,9 @@
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-y+z=vgn-k5u2__k)lz4p$xzk)8(!^yd)=^_+*--=3336k%7@y+'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -45,8 +40,8 @@ ROOT_URLCONF = 'edubridge.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],  # প্রোজেক্ট লেভেলের টেমপ্লেট ফোল্ডার
-        'APP_DIRS': True,  # অ্যাপের templates ফোল্ডার থেকে স্বয়ংক্রিয় টেমপ্লেট লোড
+        'DIRS': [BASE_DIR / "templates"],
+        'APP_DIRS': True, 
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
@@ -67,9 +62,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
