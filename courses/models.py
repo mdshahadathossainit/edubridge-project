@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.conf import settings
 
 
-# নতুন Teacher মডেল
+
 class Teacher(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
