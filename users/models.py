@@ -15,7 +15,6 @@ class Profile(models.Model):
 
 
 class SuccessStory(models.Model):
-    """সাফল্যের গল্প সংরক্ষণের জন্য মডেল"""
     title = models.CharField(max_length=200)
     description = models.TextField()
     image = models.ImageField(upload_to='success_stories/')
@@ -25,7 +24,7 @@ class SuccessStory(models.Model):
 
 
 class SlideshowImage(models.Model):
-    """হোমপেজের স্লাইডারের জন্য ছবি"""
+
     image = models.ImageField(upload_to='slideshows/')
     caption = models.CharField(max_length=255, blank=True)
 
