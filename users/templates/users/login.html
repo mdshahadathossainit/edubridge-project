@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>লগইন - EduBridge</title>
+    <title>Log in - EduBridge</title>
     <style>
         body {
             font-family: sans-serif;
@@ -48,7 +48,7 @@
 </head>
 <body>
 
-<h2 style="text-align:center;">লগইন করো</h2>
+<h2 style="text-align:center;">Log in </h2>
 
 <div class="messages">
     {% if messages %}
@@ -61,7 +61,7 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">লগইন</button>
+    <button type="submit">Log in</button>
 </form>
 <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
 
