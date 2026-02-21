@@ -1,7 +1,7 @@
 # courses/admin.py
 
 from django.contrib import admin
-from .models import Course, Enrollment # শুধুমাত্র courses অ্যাপের মডেলগুলো ইমপোর্ট করা হয়েছে
+from .models import Course, Enrollment  
 
 
 
