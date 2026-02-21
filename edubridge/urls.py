@@ -12,7 +12,7 @@ urlpatterns = [
     path('courses/', include('courses.urls')),
 ]
 
-# ডেভেলপমেন্টের জন্য মিডিয়া ফাইল সার্ভ করা
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
