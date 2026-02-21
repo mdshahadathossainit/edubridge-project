@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>রেজিস্ট্রেশন - EduBridge</title>
+    <title>Registration - EduBridge</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -74,7 +74,7 @@
 </head>
 <body>
 
-<h2>নতুন অ্যাকাউন্ট তৈরি করো</h2>
+<h2>Create New account</h2>
 
 <div class="messages">
     {% if messages %}
@@ -87,11 +87,11 @@
 <form method="post" novalidate>
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">রেজিস্ট্রেশন</button>
+    <button type="submit">Registration</button>
 </form>
 
 <div class="back-link">
-    <a href="{% url 'home' %}">← হোমপেজে ফিরে যাও</a>
+    <a href="{% url 'home' %}">← Back your Home page</a>
 </div>
 
 </body>
