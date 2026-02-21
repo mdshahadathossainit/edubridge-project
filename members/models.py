@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 
 
 class Teacher(models.Model):
-    # User মডেলের সাথে সংযোগ (লগইনের জন্য)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 
     name = models.CharField(max_length=100)
@@ -50,7 +49,6 @@ class Student(models.Model):
     def __str__(self):
         return self.user.get_full_name() or self.user.username
 
-# SuccessStory মডেল
 class SuccessStory(models.Model):
     student_name = models.CharField(max_length=100)
     story_text = models.TextField()
@@ -59,7 +57,6 @@ class SuccessStory(models.Model):
     def __str__(self):
         return self.student_name
 
-# SlideshowImage মডেল
 class SlideshowImage(models.Model):
     image = models.ImageField(upload_to='slideshow_images/')
     caption = models.CharField(max_length=200, blank=True)
