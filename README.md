@@ -2,6 +2,17 @@
 # Edubridge - Online Learning Platform
 live demo: https://mdshahadathossainit.pythonanywhere.com/
 
+
+#### 📚 [PaperFlow](https://github.com/mdshahadathossainit/paperflow) *(Latest)*
+<p align="center">
+  <img src="https://i.imgur.com/IYxgR4q.png" width="850" alt="PaperFlow Dashboard"/>
+  <br><br>
+  <img src="https://i.imgur.com/e4n5Dth.png" width="400"/>
+  <img src="https://i.imgur.com/53caT5C.png" width="400" alt="PaperFlow Features"/>
+</p>
+
+
+
 ### About the Project
 
 Edubridge is a Django-based online learning platform. The primary goal of this project is to create an effective and user-friendly digital learning environment for both students and teachers. Users can enroll in various courses, and teachers can upload and manage their course content.
