@@ -12,20 +12,23 @@ class Teacher(models.Model):
     def __str__(self):
         return self.name
 
-class SiteSettings(models.Model):
-    site_name = models.CharField(max_length=100, default='EduBridge')
-    logo = models.ImageField(upload_to='site/', blank=True, null=True)
-    background_image = models.ImageField(upload_to='site/', blank=True, null=True)
-
-    def __str__(self):
-        return self.site_name
-
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     enrollment_number = models.CharField(max_length=30, unique=True)
 
     def __str__(self):
         return self.user.get_full_name() or self.user.username
+
+class SiteSettings(models.Model):
+    site_name = models.CharField(max_length=100, default='EduBridge')
+    logo = models.ImageField(upload_to='site/', blank=True, null=True)
+    background_image = models.ImageField(upload_to='site/', blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Site Settings"
+
+    def __str__(self):
+        return self.site_name
 
 class SuccessStory(models.Model):
     student_name = models.CharField(max_length=100)
