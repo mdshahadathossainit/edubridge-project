@@ -1,27 +1,267 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}
-{% endblock %}
+{% block title %}Teacher Dashboard - EduBridge{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    :root {
+        --primary: #0061ff;
+        --secondary: #64748b;
+        --bg-light: #f1f5f9;
+        --white: #ffffff;
+        --accent: #10b981;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--bg-light);
+    }
+
+    .dashboard-container {
+        padding-top: 30px;
+        padding-bottom: 50px;
+    }
+
+    .welcome-card {
+        background: linear-gradient(135deg, #0061ff 0%, #60a5fa 100%);
+        color: white;
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 20px rgba(0, 97, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .welcome-card::after {
+        content: '\f51c';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        right: -20px;
+        bottom: -20px;
+        font-size: 150px;
+        opacity: 0.1;
+        transform: rotate(-15deg);
+    }
+
+    .welcome-card h2 {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .info-card {
+        background: var(--white);
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+    .info-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .info-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .info-header h5 {
+        margin: 0;
+        font-weight: 600;
+        color: #1e293b;
+    }
+
+    .info-body {
+        padding: 25px;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .detail-icon {
+        width: 45px;
+        height: 45px;
+        background: rgba(0, 97, 255, 0.1);
+        color: var(--primary);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 1.2rem;
+    }
+
+    .detail-text label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--secondary);
+        margin-bottom: 2px;
+    }
+
+    .detail-text span {
+        font-weight: 500;
+        color: #334155;
+    }
+
+    .btn-action {
+        padding: 12px 25px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+    .btn-edit {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+    }
+
+    .btn-edit:hover {
+        background-color: #0056e0;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 97, 255, 0.3);
+    }
+
+    .btn-courses {
+        background-color: var(--white);
+        color: var(--primary);
+        border: 2px solid var(--primary);
+    }
+
+    .btn-courses:hover {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .stat-box {
+        text-align: center;
+        padding: 20px;
+        border-radius: 15px;
+        background: #f8fafc;
+    }
+
+    .stat-box i {
+        font-size: 1.5rem;
+        color: var(--accent);
+        margin-bottom: 10px;
+    }
+
+    .stat-box h4 {
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .stat-box p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--secondary);
+    }
+</style>
+
+<div class="container dashboard-container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card p-4 shadow-sm">
-                <h2 class="card-title text-center mb-4">স্বাWelcome, {{ user.first_name }}!</h2>
-                <p class="text-center text-muted">You are a Teachear</p>
-                <hr>
-                <div class="card-body">
-                    <h5 class="card-subtitle mb-3">Profile Details</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>User Name:</strong> {{ user.username }}</li>
-                        <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
-                        <li class="list-group-item"><strong>User type:</strong> {{ user.profile.get_user_type_display }}</li>
-                    </ul>
+        <div class="col-lg-10">
+            <div class="welcome-card">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2>Welcome, {{ user.first_name|default:user.username }}!</h2>
+                        <p class="lead mb-0">What would you like to teach today?</p>
+                        <span class="badge bg-white text-primary mt-2 px-3 py-2 rounded-pill">
+                            <i class="fas fa-chalkboard-teacher me-1"></i> Educator Profile
+                        </span>
+                    </div>
                 </div>
-                <div class="mt-4 text-center">
-                    <a href="{% url 'edit_profile' %}" class="btn btn-primary me-2">Edite your profile</a>
-                    <a href="{% url 'my_courses' %}" class="btn btn-secondary">See My course</a>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-7">
+                    <div class="card info-card">
+                        <div class="info-header">
+                            <h5><i class="fas fa-user-circle me-2 text-primary"></i>Profile Details</h5>
+                            <a href="{% url 'edit_profile' %}" class="text-primary text-decoration-none small">Edit Info</a>
+                        </div>
+                        <div class="info-body">
+                            <div class="detail-item">
+                                <div class="detail-icon"><i class="fas fa-id-badge"></i></div>
+                                <div class="detail-text">
+                                    <label>Username</label>
+                                    <span>{{ user.username }}</span>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="detail-text">
+                                    <label>Email Address</label>
+                                    <span>{{ user.email }}</span>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-icon"><i class="fas fa-user-tag"></i></div>
+                                <div class="detail-text">
+                                    <label>User Role</label>
+                                    <span>{{ user.profile.get_user_type_display|default:"Teacher" }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-3 border-top d-flex gap-3">
+                                <a href="{% url 'edit_profile' %}" class="btn btn-action btn-edit">
+                                    <i class="fas fa-edit"></i> Edit Profile
+                                </a>
+                                <a href="{% url 'my_courses' %}" class="btn btn-action btn-courses">
+                                    <i class="fas fa-book-open"></i> My Courses
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="card info-card">
+                        <div class="info-header">
+                            <h5><i class="fas fa-chart-line me-2 text-primary"></i>At a Glance</h5>
+                        </div>
+                        <div class="info-body">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="stat-box">
+                                        <i class="fas fa-graduation-cap"></i>
+                                        <h4>{{ user.teacher_profile.courses.count|default:"0" }}</h4>
+                                        <p>Active Courses</p>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-box">
+                                        <i class="fas fa-users" style="color: #6366f1;"></i>
+                                        <h4>{{ total_students|default:"0" }}</h4>
+                                        <p>Total Students</p>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <div class="p-3 bg-light rounded-3">
+                                        <p class="small text-muted mb-2"><i class="fas fa-info-circle me-1"></i> Quick Tip:</p>
+                                        <p class="small mb-0">Keep your profile updated so students can find and connect with you more easily.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
