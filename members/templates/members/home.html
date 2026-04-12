@@ -1,481 +1,98 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-<!-- Google Fonts & Font Awesome for Professional Look -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
 <style>
-  :root {
-    --primary-color: #0061ff;
-    --secondary-color: #60a5fa;
-    --dark-navy: #0f172a;
-    --text-main: #334155;
-    --bg-light: #f8fafc;
-    --white: #ffffff;
-    --accent: #fbbf24;
-  }
-
-  body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-light);
-    color: var(--text-main);
-    overflow-x: hidden;
-  }
-
-  /* Sticky Navbar adjustment */
-  nav {
-    background: rgba(0, 77, 153, 0.95) !important;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Hero Section */
-  .hero {
-    height: 85vh;
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(0, 97, 255, 0.6)),
-      {% if site_settings and site_settings.background_image %}
-        url("{{ site_settings.background_image.url }}");
-      {% else %}
-        url("{% static 'images/hero-bg.jpg' %}");
-      {% endif %}
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    color: var(--white);
-    padding: 0 20px;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    animation: slideDown 1s ease-out;
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-    max-width: 700px;
-    margin-bottom: 35px;
-    opacity: 0.9;
-    animation: fadeIn 1.5s ease-in;
-  }
-
-  .btn-hero {
-    background: var(--primary-color);
-    color: white;
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    box-shadow: 0 10px 20px rgba(0, 97, 255, 0.3);
-  }
-
-  .btn-hero:hover {
-    background: transparent;
-    border-color: var(--white);
-    color: var(--white);
-    transform: translateY(-3px);
-  }
-
-  /* Sections General */
-  section {
-    padding: 100px 0;
-  }
-
-  .section-title {
-    text-align: center;
-    margin-bottom: 60px;
-    position: relative;
-  }
-
-  .section-title h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--dark-navy);
-  }
-
-  .section-title h2::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
-    background: var(--primary-color);
-    margin: 15px auto;
-    border-radius: 2px;
-  }
-
-  /* Glassmorphism Slideshow */
-  .slideshow-container {
-    max-width: 1100px;
-    margin: -100px auto 50px;
-    position: relative;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    z-index: 10;
-  }
-
-  .slideshow-image {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-    display: none;
-    transition: transform 1s ease;
-  }
-
-  .slideshow-caption {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
-    color: white;
-    padding: 40px 20px 20px;
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  /* Grid Layout & Cards */
-  .card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    padding: 0 20px;
-  }
-
-  .custom-card {
-    background: var(--white);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .custom-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  }
-
-  .card-img-wrapper {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-  }
-
-  .custom-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .custom-card:hover img {
-    transform: scale(1.1);
-  }
-
-  .card-content {
-    padding: 25px;
-    flex-grow: 1;
-  }
-
-  .card-content h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--dark-navy);
-    margin-bottom: 12px;
-  }
-
-  .meta-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #64748b;
-    border-top: 1px solid #f1f5f9;
-    padding-top: 15px;
-    margin-top: 15px;
-  }
-
-  .price-tag {
-    color: var(--primary-color);
-    font-weight: 700;
-  }
-
-  /* Teachers Section */
-  .teacher-card {
-    text-align: center;
-    padding: 40px 20px;
-  }
-
-  .teacher-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    border: 5px solid var(--white);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    object-fit: cover;
-  }
-
-  /* Success Stories */
-  .success-story-card {
-    background: var(--white);
-    padding: 35px;
-    border-radius: 20px;
-    text-align: center;
-    border-bottom: 5px solid var(--primary-color);
-  }
-
-  .success-story-card img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-
-  /* Animations */
-  @keyframes slideDown {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* Developer Section - Modern Look */
-  #developer {
-    background: var(--dark-navy);
-    color: white;
-    padding: 80px 20px;
-    border-radius: 40px 40px 0 0;
-  }
-
-  #developer h2 { color: white; }
-  #developer a { color: var(--secondary-color); font-weight: 600; text-decoration: none; }
-  #developer a:hover { color: var(--white); }
-
-  .social-links a {
-    font-size: 1.5rem;
-    margin: 0 15px;
-    color: rgba(255,255,255,0.7);
-    transition: 0.3s;
-  }
-
-  .social-links a:hover { color: var(--accent); }
-
+    :root { --primary-color: #0061ff; --dark-navy: #0f172a; --white: #ffffff; }
+    .hero { height: 70vh; background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(0, 97, 255, 0.6)), 
+            {% if site_settings.background_image %} url("{{ site_settings.background_image.url }}") {% else %} url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3") {% endif %};
+            background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--white); text-align: center; border-radius: 0 0 50px 50px; }
+    .hero h1 { font-size: 3.5rem; font-weight: 700; }
+    .section-title { text-align: center; margin: 60px 0 40px; }
+    .section-title h2::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary-color); margin: 15px auto; }
+    .custom-card { border: none; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; overflow: hidden; height: 100%; }
+    .custom-card:hover { transform: translateY(-10px); }
+    .card-img-top { height: 200px; object-fit: cover; }
+    .slideshow-container { margin: 40px 0; position: relative; border-radius: 20px; overflow: hidden; height: 400px; }
+    .slideshow-image { width: 100%; height: 100%; object-fit: cover; display: none; }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-      {% if site_settings and site_settings.logo %}
-        <img src="{{ site_settings.logo.url }}" alt="EduBridge" style="height:45px; margin-right: 10px;">
-      {% endif %}
-      <span style="font-weight: 700; letter-spacing: 1px;">EDUBRIDGE</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link px-3" href="{% url 'home' %}">Home</a></li>
-        <li class="nav-item"><a class="nav-link px-3" href="{% url 'course_list' %}">Courses</a></li>
-        <li class="nav-item"><a class="nav-link px-3" href="{% url 'teachers_list' %}">Teachers</a></li>
-        {% if user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link px-3 btn btn-outline-light ms-lg-2" href="{% url 'dashboard' %}">Dashboard</a></li>
-        {% else %}
-          <li class="nav-item"><a class="nav-link px-3" href="{% url 'login' %}">Login</a></li>
-          <li class="nav-item"><a class="nav-link px-3 btn btn-primary ms-lg-2 text-white" href="{% url 'register' %}">Get Started</a></li>
-        {% endif %}
-      </ul>
+<div class="hero mb-5">
+    <h1>Empower Your Future</h1>
+    <p class="lead">Join thousands of students and start learning from the best instructors today.</p>
+    <div class="mt-4">
+        <a href="{% url 'course_list' %}" class="btn btn-primary btn-lg rounded-pill px-5">Browse Courses</a>
     </div>
-  </div>
-</nav>
-
-<div class="hero">
-  <h1>Advance Your Skills</h1>
-  <p>প্ল্যাটফর্মে আপনাকে স্বাগতম! এখানে আপনি আপনার মেধা বিকাশের জন্য সেরা কোর্স এবং অভিজ্ঞ শিক্ষক খুঁজে পাবেন।</p>
-  <div class="d-flex gap-3">
-    <a href="{% url 'course_list' %}" class="btn btn-hero">সব কোর্স দেখুন</a>
-    {% if not user.is_authenticated %}
-    <a href="{% url 'register' %}" class="btn btn-outline-light px-4 rounded-pill d-flex align-items-center">নিবন্ধন করুন</a>
-    {% endif %}
-  </div>
 </div>
 
 {% if slideshow_images %}
-<div class="slideshow-container">
-  {% for image in slideshow_images %}
-  <img class="slideshow-image" src="{{ image.image.url }}" alt="{{ image.caption }}">
-  {% endfor %}
-  <div class="slideshow-caption">আমাদের লার্নিং এনভায়রনমেন্ট</div>
+<div class="slideshow-container shadow-lg">
+    {% for image in slideshow_images %}
+        <img class="slideshow-image" src="{{ image.image.url }}" alt="{{ image.caption }}">
+    {% endfor %}
 </div>
 {% endif %}
 
-<div class="container">
-  <!-- Popular Courses -->
-  <section id="courses">
+<section>
     <div class="section-title">
-      <h2>জনপ্রিয় কোর্সসমূহ</h2>
-      <p>আপনার ক্যারিয়ার গড়ার জন্য সঠিক কোর্সটি বেছে নিন</p>
+        <h2>Popular Courses</h2>
+        <p>Pick the right course to build your career</p>
     </div>
-    <div class="card-container">
-      {% for course in courses %}
-        <div class="custom-card">
-          <div class="card-img-wrapper">
-            {% if course.image %}
-              <img src="{{ course.image.url }}" alt="{{ course.title }}">
-            {% else %}
-              <img src="{% static 'images/default_course.jpg' %}" alt="{{ course.title }}">
-            {% endif %}
-          </div>
-          <div class="card-content">
-            <h3>{{ course.title }}</h3>
-            <p class="text-muted small">{{ course.description|truncatewords:12 }}</p>
-            <div class="meta-info">
-              <span><i class="far fa-clock me-1"></i> {{ course.duration }} সপ্তাহ</span>
-              <span class="price-tag"><i class="fas fa-tags me-1"></i> কোর্সটি দেখুন</span>
+    <div class="row g-4">
+        {% for course in courses %}
+        <div class="col-md-4">
+            <div class="card custom-card">
+                {% if course.image %}
+                    <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Course Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ course.title }}</h5>
+                    <p class="card-text text-muted">{{ course.description|truncatewords:15 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-primary fw-bold">${{ course.price }}</span>
+                        <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-primary btn-sm rounded-pill">View Details</a>
+                    </div>
+                </div>
             </div>
-            <a href="{% url 'course_detail' course.id %}" class="btn btn-primary w-100 mt-3 rounded-pill">বিস্তারিত দেখুন</a>
-          </div>
         </div>
-      {% empty %}
-        <p class="text-center w-100">বর্তমানে কোনো কোর্স নেই।</p>
-      {% endfor %}
+        {% endfor %}
     </div>
-  </section>
+</section>
 
-  <!-- Meet Our Teachers -->
-  <section id="teachers" class="bg-white rounded-3 shadow-sm px-4">
+<section class="mt-5 pt-5">
     <div class="section-title">
-      <h2>আমাদের দক্ষ শিক্ষকগণ</h2>
-      <p>অভিজ্ঞ মেন্টরদের সাথে সরাসরি শিখুন</p>
+        <h2>Our Expert Instructors</h2>
+        <p>Learn directly from industry experts</p>
     </div>
-    <div class="card-container">
-      {% for teacher in teachers %}
-        <div class="custom-card teacher-card">
-          {% if teacher.photo %}
-            <img class="teacher-img" src="{{ teacher.photo.url }}" alt="{{ teacher.name }}">
-          {% else %}
-            <img class="teacher-img" src="{% static 'images/default_teacher.jpg' %}" alt="Teacher">
-          {% endif %}
-          <h3>{{ teacher.name }}</h3>
-          <p class="text-primary fw-bold">{{ teacher.subject }}</p>
-          <p class="small px-3">{{ teacher.bio|truncatewords:10 }}</p>
-          <a href="{% url 'teacher_profile' teacher.id %}" class="btn btn-outline-primary rounded-pill mt-2">প্রোফাইল দেখুন</a>
+    <div class="row g-4 text-center">
+        {% for teacher in teachers %}
+        <div class="col-md-3">
+            <div class="p-4 bg-white rounded-4 shadow-sm">
+                {% if teacher.photo %}
+                    <img src="{{ teacher.photo.url }}" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                {% endif %}
+                <h4>{{ teacher.name }}</h4>
+                <p class="text-primary">{{ teacher.subject }}</p>
+                <a href="{% url 'teacher_profile' teacher.id %}" class="btn btn-link">View Profile</a>
+            </div>
         </div>
-      {% empty %}
-        <p class="text-center w-100">কোনো শিক্ষক খুঁজে পাওয়া যায়নি।</p>
-      {% endfor %}
+        {% endfor %}
     </div>
-  </section>
-
-  <!-- Success Stories -->
-  {% if success_stories %}
-  <section id="stories">
-    <div class="section-title">
-      <h2>সাফল্যের গল্প</h2>
-      <p>আমাদের শিক্ষার্থীদের সাফল্যের অনুপ্রেরণা</p>
-    </div>
-    <div class="card-container">
-      {% for story in success_stories %}
-        <div class="success-story-card shadow-sm">
-          {% if story.photo %}
-            <img src="{{ story.photo.url }}" alt="{{ story.student_name }}">
-          {% endif %}
-          <h4 class="mb-2">{{ story.student_name }}</h4>
-          <p class="fst-italic text-muted">"{{ story.story_text|truncatewords:25 }}"</p>
-          <div class="text-warning">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  </section>
-  {% endif %}
-
-  <!-- Location -->
-  <section id="location">
-    <div class="section-title">
-      <h2>আমাদের অবস্থান</h2>
-    </div>
-    <div class="rounded-4 overflow-hidden shadow-lg">
-      <iframe
-        width="100%"
-        height="450"
-        style="border:0;"
-        loading="lazy"
-        allowfullscreen
-        src="https://www.google.com/maps?q=22.38617772615635,91.83057062572003&hl=en&z=15&output=embed">
-      </iframe>
-    </div>
-  </section>
-</div>
-
-<!-- Developer Section -->
-<section id="developer">
-  <div class="container text-center">
-    <div class="section-title">
-      <h2 class="text-white">ডেভেলপার সম্পর্কে</h2>
-    </div>
-    <div class="mx-auto" style="max-width: 700px;">
-      <p class="mb-4 lead">আসসালামু আলাইকুম! আমি <strong>মোঃ শাহাদাত হোসেন</strong>, EduBridge প্ল্যাটফর্মের নির্মাতা। আমি পাইথন, জ্যাঙ্গো এবং মেশিন লার্নিং নিয়ে কাজ করতে পছন্দ করি।</p>
-      
-      <div class="social-links mb-4">
-        <a href="mailto:falahia340371@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-        <a href="https://github.com/mdshahadathossainit/" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/yourprofile" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="https://web.facebook.com/abuabdullah.ahmodmusa/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-      </div>
-      
-      <div class="mt-4 p-4 border border-secondary rounded-3">
-        <p class="small text-white-50">আমার লক্ষ্য প্রযুক্তির মাধ্যমে শিক্ষার প্রসারে সাহায্য করা। এই প্রজেক্ট সম্পর্কে কোনো পরামর্শ থাকলে যোগাযোগ করতে পারেন।</p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <script>
-  let slideIndex = 0;
-  showSlides();
-
-  function showSlides() {
-    let i;
-    let slides = document.getElementsByClassName("slideshow-image");
-    let caption = document.querySelector(".slideshow-caption");
-    if (!slides.length) return;
-
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-      slides[i].style.opacity = "0";
+    let slideIndex = 0;
+    const slides = document.getElementsByClassName("slideshow-image");
+    if (slides.length > 0) {
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+            slideIndex++;
+            if (slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 5000);
+        }
+        showSlides();
     }
-    slideIndex++;
-    if (slideIndex > slides.length) { slideIndex = 1; }
-    
-    slides[slideIndex - 1].style.display = "block";
-    setTimeout(() => {
-      slides[slideIndex - 1].style.opacity = "1";
-    }, 100);
-    
-    caption.textContent = slides[slideIndex - 1].alt || "সবাইকে স্বাগতম";
-    setTimeout(showSlides, 5000); 
-  }
 </script>
-
 {% endblock %}
