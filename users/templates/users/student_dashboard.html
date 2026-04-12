@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Student Dashboard</h2>
-<p>Welcome, {{ student.user.username }}!</p>
+<p>Welcome, {{ user.username }}!</p>
+<div class="mt-4">
+    <p>This is your personal dashboard. Here you can see your enrolled courses and progress.</p>
+    <a href="{% url 'my_courses' %}" class="btn btn-primary">My Enrolled Courses</a>
+</div>
 {% endblock %}
