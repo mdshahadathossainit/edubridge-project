@@ -1,11 +1,8 @@
-# members/views.py
-
 from django.shortcuts import render, get_object_or_404
-from .models import Course, Teacher, SiteSettings, SuccessStory, SlideshowImage
-
+from .models import Teacher, SiteSettings, SuccessStory, SlideshowImage
+from courses.models import Course
 
 def home_page(request):
-
     courses = Course.objects.all()[:6]
     teachers = Teacher.objects.all()[:4]
     site_settings = SiteSettings.objects.first()
@@ -19,14 +16,11 @@ def home_page(request):
         'success_stories': success_stories,
         'slideshow_images': slideshow_images,
     }
-
     return render(request, 'members/home.html', context)
-
 
 def teachers_list(request):
     teachers = Teacher.objects.all()
     return render(request, 'members/teachers_list.html', {'teachers': teachers})
-
 
 def teacher_profile(request, id):
     teacher = get_object_or_404(Teacher, id=id)
