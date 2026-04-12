@@ -2,6 +2,7 @@ from django.contrib import admin
 from django import forms
 from django.contrib.auth.models import User
 from .models import SiteSettings, Teacher, Student, SuccessStory, SlideshowImage
+from users.models import Profile
 
 class TeacherAdminForm(forms.ModelForm):
     username = forms.CharField(required=True)
@@ -30,6 +31,9 @@ class TeacherAdmin(admin.ModelAdmin):
                 password=password
             )
             obj.user = user
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.user_type = 'teacher'
+            profile.save()
         else:
             if password and obj.user:
                 obj.user.set_password(password)
