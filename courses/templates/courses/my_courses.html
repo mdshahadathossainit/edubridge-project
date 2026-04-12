@@ -1,11 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>My Enrolled Courses</h2>
-  <ul>
-    {% for enrollment in enrollments %}
-      <li>{{ enrollment.course.title }} — {{ enrollment.course.duration }}</li>
-    {% empty %}
-      <li>You have not enrolled in any courses yet.</li>
-    {% endfor %}
-  </ul>
+<div class="container">
+    <div class="mb-5">
+        <h1 class="fw-bold">My Learning Workspace</h1>
+        <p class="text-secondary">Track your progress and continue learning</p>
+    </div>
+
+    <div class="row g-4">
+        {% for enrollment in enrollments %}
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card overflow-hidden">
+                <div class="p-4 bg-primary text-white d-flex justify-content-between align-items-center">
+                    <i class="fas fa-graduation-cap fa-2x"></i>
+                    <span class="badge bg-white text-primary">In Progress</span>
+                </div>
+                <div class="p-4">
+                    <h5 class="fw-bold mb-2">{{ enrollment.course.title }}</h5>
+                    <p class="small text-secondary mb-4">Instructor: {{ enrollment.course.instructor.name }}</p>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1 fw-bold">
+                            <span>Course Progress</span>
+                            <span>45%</span>
+                        </div>
+                        <div class="progress" style="height: 10px; border-radius: 10px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 45%; background: var(--gradient);"></div>
+                        </div>
+                    </div>
+                    
+                    <a href="{% url 'course_detail' enrollment.course.id %}" class="btn btn-primary w-100 rounded-pill py-2 mt-2">
+                        Continue Learning <i class="fas fa-play-circle ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="glass-card p-5 d-inline-block shadow-sm">
+                <img src="https://illustrations.popsy.co/blue/man-on-bicycle.svg" class="mb-4" style="width: 200px;">
+                <h3 class="fw-bold">No courses yet</h3>
+                <p class="mb-4 text-secondary">You haven't enrolled in any courses. Start your first journey today!</p>
+                <a href="{% url 'course_list' %}" class="btn btn-gradient px-5 py-3 rounded-pill">Browse Available Courses</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
