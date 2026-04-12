@@ -1,17 +1,61 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Available Courses</h2>
-  <ul>
-    {% for course in courses %}
-      <li>
-        <strong>{{ course.title }}</strong><br>
-        {{ course.description }}<br>
-        Instructor: {{ course.instructor }}<br>
-        Duration: {{ course.duration }}<br>
-        <a href="{% url 'enroll_in_course' course.id %}">Enroll</a>
-      </li>
-    {% empty %}
-      <li>No courses available.</li>
-    {% endfor %}
-  </ul>
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-5 gap-3">
+        <div>
+            <h1 class="fw-bold mb-1">Explore All Courses</h1>
+            <p class="text-secondary">Find the perfect mentor to help you grow</p>
+        </div>
+        {% if user.is_staff %}
+        <a href="{% url 'create_course' %}" class="btn btn-success rounded-pill px-4">
+            <i class="fas fa-plus me-2"></i>Create New Course
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="row g-4">
+        {% for course in courses %}
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card overflow-hidden h-100 border-0">
+                <div class="position-relative">
+                    {% if course.image %}
+                        <img src="{{ course.image.url }}" class="w-100 object-fit-cover" style="height: 200px;" alt="{{ course.title }}">
+                    {% else %}
+                        <div class="w-100 bg-secondary-subtle d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-book fa-3x text-white"></i>
+                        </div>
+                    {% endif %}
+                    <div class="position-absolute top-0 end-0 m-3 badge bg-white text-primary p-2 fs-6 shadow">
+                        ${{ course.price }}
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="mb-2">
+                        <span class="badge bg-primary-subtle text-primary">{{ course.duration }} Weeks</span>
+                    </div>
+                    <h5 class="fw-bold mb-3">{{ course.title }}</h5>
+                    <p class="text-secondary small mb-4">{{ course.description|truncatewords:15 }}</p>
+                    
+                    <div class="d-flex align-items-center justify-content-between pt-3 border-top">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-chalkboard-teacher text-primary me-2"></i>
+                            <span class="small fw-semibold">{{ course.instructor.name }}</span>
+                        </div>
+                        <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-primary btn-sm rounded-pill">View Details</a>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{% url 'enroll_in_course' course.id %}" class="btn btn-primary w-100 rounded-pill py-2">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <img src="https://illustrations.popsy.co/blue/online-registration.svg" class="mb-4" style="width: 200px;">
+            <h3>No courses found</h3>
+            <p>Try searching for something else or check back later.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
