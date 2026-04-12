@@ -3,66 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}EduBridge - Learn Together{% endblock %}</title>
+    <title>{% block title %}EduBridge - Ignite Your Future{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { padding-top: 70px; background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; }
-        .navbar-brand { font-weight: bold; }
-        footer { background: #004080; color: white; padding: 20px 0; margin-top: auto; }
-        .about-developer { padding: 40px 0; background: #fff; border-top: 1px solid #eee; }
+        :root {
+            --primary: #4f46e5;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f1f5f9;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-vibrant {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #EEF2FF, #F5F3FF, #ECFEFF);
+        }
+
+        .navbar {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--dark) !important;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        .btn-gradient {
+            background: var(--gradient);
+            color: white !important;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 24px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .content-wrapper {
+            flex: 1;
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: auto;
+        }
+
+        .alert {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        /* Shared Components */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .glass-card:hover { transform: translateY(-5px); }
+
+        .section-title {
+            font-weight: 800;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 0;
+            width: 50%; height: 5px;
+            background: var(--gradient);
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
+    <div class="bg-vibrant"></div>
+    
+    <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">EduBridge</a>
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-bridge me-2"></i>EduBridge
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'course_list' %}">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'teachers_list' %}">Teachers</a></li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link fw-bold text-primary" href="{% url 'dashboard' %}">Dashboard</a></li>
+                        <li class="nav-item ms-lg-3"><a class="btn btn-outline-danger rounded-pill px-4" href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item ms-lg-3"><a class="btn btn-gradient px-4" href="{% url 'register' %}">Get Started</a></li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container mb-5">
+    <div class="container content-wrapper">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-4 shadow-sm">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} me-2"></i>
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             {% endfor %}
         {% endif %}
+        
         {% block content %}{% endblock %}
     </div>
 
-    <section class="about-developer text-center">
-        <div class="container">
-            <h3>About Developer</h3>
-            <p>Developed by <strong>Talha Al Mahmud</strong></p>
-            <p>
-                <a href="mailto:fslshis340371@gmail.com" class="text-decoration-none me-3"><i class="fas fa-envelope"></i> Email</a>
-                <a href="#" class="text-decoration-none me-3"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <a href="#" class="text-decoration-none"><i class="fab fa-github"></i> GitHub</a>
-            </p>
-        </div>
-    </section>
-
     <footer>
-        <div class="container text-center">
-            <p>&copy; 2025 EduBridge. All rights reserved.</p>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h4 class="fw-bold mb-4">EduBridge</h4>
+                    <p class="text-secondary">Revolutionizing digital education with expert-led courses and a seamless learning experience.</p>
+                </div>
+                <div class="col-md-4 text-md-center">
+                    <h5 class="fw-bold mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'course_list' %}" class="text-white-50 text-decoration-none">Explore Courses</a></li>
+                        <li><a href="{% url 'register' %}" class="text-white-50 text-decoration-none">Join as Student</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <h5 class="fw-bold mb-4">Follow Us</h5>
+                    <div class="d-flex justify-content-md-end gap-3">
+                        <a href="#" class="text-white fs-4"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 opacity-25">
+            <div class="text-center text-white-50">
+                <p class="mb-0">&copy; 2025 EduBridge. Developed with <i class="fas fa-heart text-danger"></i> by Talha Al Mahmud</p>
+            </div>
         </div>
     </footer>
 
