@@ -6,8 +6,9 @@ from members.models import Teacher
 class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    instructor = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    duration = models.PositiveIntegerField()
+    instructor = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='courses')
+    duration = models.PositiveIntegerField(help_text="Duration in weeks")
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     created_at = models.DateTimeField(default=timezone.now)
     image = models.ImageField(upload_to='courses/', blank=True, null=True)
 
