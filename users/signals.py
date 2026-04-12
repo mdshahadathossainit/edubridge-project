@@ -1,13 +1,31 @@
-from django.db.models.signals import post_save
+from django import forms
 from django.contrib.auth.models import User
-from django.dispatch import receiver
+from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+class RegistrationForm(UserCreationForm):
+    user_type = forms.ChoiceField(
+        choices=Profile.USER_TYPES,
+        required=True,
+        label="User type",
+    )
+    email = forms.EmailField(required=True)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data.get('email')
+        if commit:
+            user.save()
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.user_type = self.cleaned_data.get('user_type')
+            profile.save()
+        return user
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
