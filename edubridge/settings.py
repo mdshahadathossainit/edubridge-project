@@ -7,7 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y+z=vgn-k5u2__k)lz4p$xzk)8(!^yd)=^_+*--=3336k%7@y+'
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mdshahadathossainit.pythonanywhere.com', 'localhost', '127.0.0.1']
+
 
 
 
