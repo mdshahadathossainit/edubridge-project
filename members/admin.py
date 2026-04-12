@@ -1,13 +1,11 @@
-# members/admin.py
-
 from django.contrib import admin
 from django import forms
 from django.contrib.auth.models import User
-from .models import SiteSettings, Teacher, Course, SuccessStory, SlideshowImage
+from .models import SiteSettings, Teacher, Student, SuccessStory, SlideshowImage
 
 class TeacherAdminForm(forms.ModelForm):
-    username = forms.CharField(required=True, help_text="Set a username for the teacher's user account.")
-    password = forms.CharField(widget=forms.PasswordInput, required=True, help_text="Set a password for the teacher's user account.")
+    username = forms.CharField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
 
     class Meta:
         model = Teacher
@@ -24,7 +22,7 @@ class TeacherAdmin(admin.ModelAdmin):
 
         if not change:
             if User.objects.filter(username=username).exists():
-                raise ValueError(f"Username '{username}' already exists. Please choose another.")
+                raise ValueError(f"Username '{username}' already exists.")
 
             user = User.objects.create_user(
                 username=username,
@@ -39,7 +37,6 @@ class TeacherAdmin(admin.ModelAdmin):
 
         super().save_model(request, obj, form, change)
 
-
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
@@ -48,10 +45,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         return True
     list_display = ('site_name',)
     fields = ('site_name', 'logo', 'background_image')
-@admin.register(Course)
-class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'instructor')
-    list_select_related = ('instructor',)
+
 @admin.register(SuccessStory)
 class SuccessStoryAdmin(admin.ModelAdmin):
     list_display = ('student_name',)
@@ -59,3 +53,5 @@ class SuccessStoryAdmin(admin.ModelAdmin):
 @admin.register(SlideshowImage)
 class SlideshowImageAdmin(admin.ModelAdmin):
     list_display = ('caption', 'image')
+
+admin.site.register(Student)
