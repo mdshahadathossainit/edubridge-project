@@ -1,5 +1,4 @@
-
-
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,9 +7,6 @@ SECRET_KEY = 'django-insecure-y+z=vgn-k5u2__k)lz4p$xzk)8(!^yd)=^_+*--=3336k%7@y+
 DEBUG = True
 
 ALLOWED_HOSTS = ['mdshahadathossainit.pythonanywhere.com', 'localhost', '127.0.0.1']
-
-
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,9 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'courses',
-'django_extensions',
-
-'members.apps.MembersConfig',
+    'django_extensions',
+    'members.apps.MembersConfig',
 ]
 
 MIDDLEWARE = [
@@ -41,7 +36,7 @@ ROOT_URLCONF = 'edubridge.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True, 
         'OPTIONS': {
             'context_processors': [
@@ -55,7 +50,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'edubridge.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -63,46 +57,27 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = 'dashboard'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-STATIC_URL = '/static/'
-
-
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-LOGIN_REDIRECT_URL = 'dashboard'
+MEDIA_ROOT = BASE_DIR / 'media'
