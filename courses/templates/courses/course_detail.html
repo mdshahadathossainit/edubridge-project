@@ -1,16 +1,70 @@
-<!-- templates/courses/course_detail.html -->
-
 {% extends 'base.html' %}
-
 {% block content %}
-  <h1>{{ course.title }}</h1>
-  <p>{{ course.description }}</p>
-  <p><strong>Instructor:</strong> {{ course.instructor }}</p>
-  <p><strong>Duration:</strong> {{ course.duration }}</p>
+<div class="row g-5">
+    <div class="col-lg-8">
+        <div class="glass-card overflow-hidden">
+            {% if course.image %}
+                <img src="{{ course.image.url }}" class="w-100 object-fit-cover" style="height: 400px;" alt="{{ course.title }}">
+            {% else %}
+                <div class="w-100 bg-dark text-white d-flex align-items-center justify-content-center" style="height: 400px;">
+                    <i class="fas fa-play-circle fa-5x"></i>
+                </div>
+            {% endif %}
+            <div class="p-5">
+                <h1 class="display-5 fw-bold mb-4">{{ course.title }}</h1>
+                <div class="d-flex flex-wrap gap-4 mb-5 text-secondary">
+                    <span><i class="fas fa-clock text-primary me-2"></i>{{ course.duration }} Weeks</span>
+                    <span><i class="fas fa-users text-primary me-2"></i>2,400+ Students</span>
+                    <span><i class="fas fa-certificate text-primary me-2"></i>Certificate Included</span>
+                </div>
+                
+                <h4 class="fw-bold mb-3">Description</h4>
+                <p class="lead text-secondary mb-5">{{ course.description }}</p>
+                
+                <h4 class="fw-bold mb-3">Course Curriculum</h4>
+                <div class="list-group list-group-flush rounded-4 overflow-hidden border">
+                    <div class="list-group-item p-4"><i class="fas fa-play me-3 text-primary"></i> Introduction to the course</div>
+                    <div class="list-group-item p-4"><i class="fas fa-play me-3 text-primary"></i> Getting started with basics</div>
+                    <div class="list-group-item p-4"><i class="fas fa-play me-3 text-primary"></i> Advanced concepts part 1</div>
+                    <div class="list-group-item p-4"><i class="fas fa-play me-3 text-primary"></i> Building real-world projects</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  {% if user.is_authenticated %}
-    <a href="{% url 'enroll_in_course' course.id %}">Enroll in this course</a>
-  {% else %}
-    <p><a href="{% url 'login' %}">Login</a> to enroll.</p>
-  {% endif %}
+    <div class="col-lg-4">
+        <div class="sticky-top" style="top: 100px;">
+            <div class="glass-card p-4 text-center mb-4">
+                <div class="display-4 fw-bold text-primary mb-3">${{ course.price }}</div>
+                <p class="text-secondary mb-4">Limited time offer! Buy now.</p>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'enroll_in_course' course.id %}" class="btn btn-gradient w-100 py-3 mb-3 fs-5">Enroll in Course</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-gradient w-100 py-3 mb-3 fs-5">Login to Enroll</a>
+                {% endif %}
+                <p class="small text-muted mb-0">30-day money back guarantee</p>
+            </div>
+
+            <div class="glass-card p-4">
+                <h5 class="fw-bold mb-4">Instructor</h5>
+                <div class="d-flex align-items-center mb-3">
+                    {% if course.instructor.photo %}
+                        <img src="{{ course.instructor.photo.url }}" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                    {% else %}
+                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <h6 class="fw-bold mb-0">{{ course.instructor.name }}</h6>
+                        <span class="small text-primary">{{ course.instructor.subject }}</span>
+                    </div>
+                </div>
+                <p class="small text-secondary">{{ course.instructor.bio|truncatewords:20 }}</p>
+                <a href="{% url 'teacher_profile' course.instructor.id %}" class="btn btn-outline-primary btn-sm w-100 rounded-pill">View Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
