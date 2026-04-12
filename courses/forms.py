@@ -1,7 +1,11 @@
-from django import forms
-from .models import Course
+{% extends 'base.html' %}
 
-class CourseForm(forms.ModelForm):
-    class Meta:
-        model = Course
-        fields = ['title', 'description', 'instructor', 'duration']
+{% block content %}
+  <h2>Create a New Course</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+  <a href="{% url 'course_list' %}">Back to Course List</a>
+{% endblock %}
