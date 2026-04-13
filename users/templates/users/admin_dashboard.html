@@ -1,6 +1,99 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Admin Dashboard</h2>
-<p>Welcome, {{ request.user.username }}!</p>
+<style>
+    .admin-header {
+        background: linear-gradient(45deg, #ec4899, #8b5cf6);
+        border-radius: 25px;
+        padding: 2.5rem;
+        color: white;
+    }
+    .admin-table {
+        border-collapse: separate;
+        border-spacing: 0 12px;
+    }
+    .admin-table thead th {
+        border: none;
+        color: #64748b;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        padding: 1rem 1.5rem;
+    }
+    .admin-table tbody tr {
+        background: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        transition: all 0.3s;
+    }
+    .admin-table tbody tr:hover {
+        transform: scale(1.01);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .admin-table td {
+        padding: 1.5rem;
+        border: none;
+        vertical-align: middle;
+    }
+    .admin-table td:first-child { border-radius: 20px 0 0 20px; }
+    .admin-table td:last-child { border-radius: 0 20px 20px 0; }
 
+    /* Bright Badges */
+    .badge-teacher { background: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
+    .badge-student { background: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
+    .badge-admin { background: #fdf2f8; color: #db2777; border: 1px solid #fce7f3; }
+</style>
+
+<div class="container py-4">
+    <div class="admin-header mb-5 shadow-lg">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold mb-1">User Management</h2>
+                <p class="mb-0 opacity-75">Admin Control Center</p>
+            </div>
+            <div class="bg-white bg-opacity-25 p-3 rounded-circle">
+                <i class="fas fa-user-shield fa-2x"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table admin-table">
+            <thead>
+                <tr>
+                    <th>User Information</th>
+                    <th>Email Address</th>
+                    <th>Role</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profile in profiles %}
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="bg-light rounded-circle p-2 me-3">
+                                <i class="fas fa-user text-secondary"></i>
+                            </div>
+                            <span class="fw-bold text-dark">{{ profile.user.username }}</span>
+                        </div>
+                    </td>
+                    <td><span class="text-secondary">{{ profile.user.email }}</span></td>
+                    <td>
+                        <span class="badge rounded-pill px-3 py-2 
+                            {% if profile.user_type == 'teacher' %}badge-teacher
+                            {% elif profile.user_type == 'student' %}badge-student
+                            {% else %}badge-admin{% endif %}">
+                            {{ profile.get_user_type_display }}
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        <a href="/admin/users/profile/{{ profile.id }}/change/" class="btn btn-sm btn-primary rounded-pill px-4">
+                            <i class="fas fa-edit me-1"></i> Edit Role
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
