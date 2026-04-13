@@ -25,3 +25,12 @@ class Enrollment(models.Model):
 
     def __str__(self):
         return f"{self.student.username} enrolled in {self.course.title}"
+
+class Homework(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='homeworks')
+    description = models.TextField()
+    due_date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"HW for {self.course.title} - {self.due_date}"
