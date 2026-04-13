@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django import forms
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from .models import SiteSettings, Teacher, Student, SuccessStory, SlideshowImage
 from users.models import Profile
 
@@ -23,7 +24,7 @@ class TeacherAdmin(admin.ModelAdmin):
 
         if not change:
             if User.objects.filter(username=username).exists():
-                raise ValueError(f"Username '{username}' already exists.")
+                raise ValidationError(f"Username '{username}' already exists.")
 
             user = User.objects.create_user(
                 username=username,
