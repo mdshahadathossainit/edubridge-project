@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4f46e5;
-            --secondary: #7c3aed;
+            --primary: #6366f1;
+            --secondary: #a855f7;
             --accent: #06b6d4;
             --dark: #0f172a;
             --light: #f8fafc;
-            --gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            --glass: rgba(255, 255, 255, 0.95);
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.4);
         }
 
         body {
@@ -28,25 +30,47 @@
             overflow-x: hidden;
         }
 
-        /* Animated Background */
         .bg-vibrant {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: linear-gradient(45deg, #EEF2FF, #F5F3FF, #ECFEFF);
+            background: #f1f5f9;
+        }
+        .bg-vibrant::before {
+            content: "";
+            position: absolute;
+            top: -10%; right: -10%;
+            width: 40%; height: 40%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            filter: blur(60px);
+        }
+        .bg-vibrant::after {
+            content: "";
+            position: absolute;
+            bottom: -10%; left: -10%;
+            width: 40%; height: 40%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+            filter: blur(60px);
         }
 
         .navbar {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            padding: 1rem 0;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.8rem 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .navbar-brand {
             font-weight: 800;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -55,86 +79,188 @@
         .nav-link {
             font-weight: 600;
             color: var(--dark) !important;
-            margin: 0 10px;
-            transition: color 0.3s;
+            margin: 0 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
         }
 
-        .nav-link:hover {
-            color: var(--primary) !important;
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 50%;
+            width: 0; height: 2px;
+            background: var(--gradient);
+            transition: all 0.3s;
+            transform: translateX(-50%);
         }
+
+        .nav-link:hover::after { width: 80%; }
+        .nav-link:hover { color: var(--primary) !important; }
 
         .btn-gradient {
             background: var(--gradient);
-            color: white !important;
+            color: var(--white) !important;
             border: none;
-            border-radius: 12px;
-            padding: 10px 24px;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 14px;
+            padding: 10px 28px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
         .btn-gradient:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-outline-danger {
+            border: 2px solid #fee2e2;
+            background: rgba(254, 226, 226, 0.5);
+            color: #ef4444 !important;
+            font-weight: 700;
+            border-radius: 14px;
+            padding: 8px 24px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-danger:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white !important;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
         }
 
         .content-wrapper {
             flex: 1;
-            padding-top: 100px;
-            padding-bottom: 50px;
+            padding-top: 120px;
+            padding-bottom: 60px;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 40px 0;
-            margin-top: auto;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s ease;
+        }
+        
+        .glass-card:hover { 
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+            border-color: rgba(99, 102, 241, 0.2);
         }
 
         .alert {
-            border-radius: 15px;
-            border: none;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-radius: 18px;
+            border: 1px solid transparent;
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        .alert-success { background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #065f46; }
+        .alert-danger { background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2); color: #991b1b; }
+
+        footer {
+            background: #020617;
+            color: #94a3b8;
+            padding: 80px 0 40px;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Shared Components */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+        footer h4, footer h5 {
+            color: var(--white);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
         }
-        
-        .glass-card:hover { transform: translateY(-5px); }
+
+        footer .quick-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        footer .quick-link:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: white;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: var(--gradient);
+            transform: translateY(-5px);
+            color: white;
+        }
 
         .section-title {
             font-weight: 800;
-            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            margin-bottom: 2.5rem;
             position: relative;
-            display: inline-block;
+            color: var(--dark);
         }
         
-        .section-title::after {
+        .section-title::before {
             content: '';
             position: absolute;
-            bottom: -10px; left: 0;
-            width: 50%; height: 5px;
+            bottom: -12px; left: 0;
+            width: 60px; height: 6px;
             background: var(--gradient);
             border-radius: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+            padding-top: 30px;
+        }
+
+        .newsletter-input {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            border-radius: 12px 0 0 12px !important;
+        }
+
+        .newsletter-btn {
+            border-radius: 0 12px 12px 0 !important;
         }
     </style>
 </head>
 <body>
     <div class="bg-vibrant"></div>
     
-    <nav class="navbar navbar-expand-lg fixed-top shadow-sm">
+    <nav id="mainNav" class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <i class="fas fa-bridge me-2"></i>EduBridge
+                <i class="fas fa-layer-group me-2" style="font-size: 0.9em;"></i>EduBridge
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -144,7 +270,12 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'teachers_list' %}">Teachers</a></li>
                     {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link fw-bold text-primary" href="{% url 'dashboard' %}">Dashboard</a></li>
-                        <li class="nav-item ms-lg-3"><a class="btn btn-outline-danger rounded-pill px-4" href="{% url 'logout' %}">Logout</a></li>
+                        <li class="nav-item ms-lg-3">
+                            <form action="{% url 'logout' %}" method="post" class="m-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger px-4">Logout</button>
+                            </form>
+                        </li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                         <li class="nav-item ms-lg-3"><a class="btn btn-gradient px-4" href="{% url 'register' %}">Get Started</a></li>
@@ -157,10 +288,12 @@
     <div class="container content-wrapper">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-4 shadow-sm">
-                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} me-2"></i>
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-4 border-0">
+                    <div class="d-flex align-items-center">
+                        <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-info-circle{% endif %} me-3 fs-5"></i>
+                        <span class="fw-semibold">{{ message }}</span>
+                    </div>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="alert"></button>
                 </div>
             {% endfor %}
         {% endif %}
@@ -170,34 +303,76 @@
 
     <footer>
         <div class="container">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <h4 class="fw-bold mb-4">EduBridge</h4>
-                    <p class="text-secondary">Revolutionizing digital education with expert-led courses and a seamless learning experience.</p>
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="navbar-brand text-white mb-4">EduBridge</h4>
+                    <p class="mb-4" style="line-height: 1.8;">
+                        A cutting-edge learning platform connecting students with expert instructors. 
+                        We aim to bridge the gap between curiosity and knowledge through high-quality 
+                        education and interactive tools.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-4 text-md-center">
-                    <h5 class="fw-bold mb-4">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'course_list' %}" class="text-white-50 text-decoration-none">Explore Courses</a></li>
-                        <li><a href="{% url 'register' %}" class="text-white-50 text-decoration-none">Join as Student</a></li>
-                    </ul>
+                <div class="col-lg-2 col-md-6">
+                    <h5>Platform</h5>
+                    <div class="footer-links">
+                        <a href="{% url 'course_list' %}" class="quick-link">Browse Courses</a>
+                        <a href="{% url 'teachers_list' %}" class="quick-link">Find Mentors</a>
+                        <a href="#" class="quick-link">Student Perks</a>
+                        <a href="#" class="quick-link">Scholarships</a>
+                        <a href="#" class="quick-link">Events</a>
+                    </div>
                 </div>
-                <div class="col-md-4 text-md-end">
-                    <h5 class="fw-bold mb-4">Follow Us</h5>
-                    <div class="d-flex justify-content-md-end gap-3">
-                        <a href="#" class="text-white fs-4"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-white fs-4"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-white fs-4"><i class="fab fa-github"></i></a>
+                <div class="col-lg-2 col-md-6">
+                    <h5>Company</h5>
+                    <div class="footer-links">
+                        <a href="#" class="quick-link">About Us</a>
+                        <a href="#" class="quick-link">Contact Support</a>
+                        <a href="#" class="quick-link">Terms of Service</a>
+                        <a href="#" class="quick-link">Privacy Policy</a>
+                        <a href="#" class="quick-link">Career</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <h5>Newsletter</h5>
+                    <p class="small mb-4">Subscribe to get the latest updates on new courses and academic features.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control newsletter-input p-3" placeholder="Enter your email">
+                        <button class="btn btn-gradient newsletter-btn px-4" type="button">Subscribe</button>
+                    </div>
+                    <div class="mt-4">
+                        <p class="small text-muted"><i class="fas fa-shield-alt me-2"></i> Your data is safe with us.</p>
                     </div>
                 </div>
             </div>
-            <hr class="my-5 opacity-25">
-            <div class="text-center text-white-50">
-                <p class="mb-0">&copy; 2025 EduBridge. Developed with <i class="fas fa-heart text-danger"></i> by Talha Al Mahmud</p>
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="small mb-0">&copy; 2026 EduBridge Learning Hub. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                        <p class="small mb-0">Designed and Developed by <strong>Talha Al Mahmud</strong></p>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
