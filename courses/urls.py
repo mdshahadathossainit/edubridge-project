@@ -7,4 +7,5 @@ urlpatterns = [
     path('<int:course_id>/enroll/', views.enroll_in_course, name='enroll_in_course'),
     path('my-courses/', views.my_courses, name='my_courses'),
     path('create/', views.create_course, name='create_course'),
+    path('add-homework/', views.add_homework, name='add_homework'),
 ]
