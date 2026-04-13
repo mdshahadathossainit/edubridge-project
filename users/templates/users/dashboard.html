@@ -1,3 +1,64 @@
-<h2>Welcome, {{ request.user.username }}!</h2>
-<p>User profile dasboard</p>
-<a href="{% url 'logout' %}">Log out</a>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="glass-card overflow-hidden">
+                <div class="p-5 text-center">
+                    <div class="position-relative d-inline-block mb-4">
+                        <div class="p-1 rounded-circle bg-white shadow-sm">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 130px; height: 130px; background: var(--gradient);">
+                                <i class="fas fa-user-astronaut fa-5x text-white"></i>
+                            </div>
+                        </div>
+                        <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle" style="width: 25px; height: 25px; border-width: 4px !important;"></span>
+                    </div>
+
+                    <h1 class="fw-bold mb-2 text-dark">Welcome back, {{ request.user.username }}!</h1>
+                    <p class="text-secondary fs-5 mb-5">Your personalized learning dashboard is ready for you.</p>
+                    
+                    <div class="row g-4 mb-5 text-start">
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 border border-white h-100" style="background: rgba(255, 255, 255, 0.4);">
+                                <div class="d-flex align-items-center mb-3 text-primary">
+                                    <i class="fas fa-id-card-alt fa-2x me-3"></i>
+                                    <h5 class="fw-bold mb-0">Identity Info</h5>
+                                </div>
+                                <p class="small text-muted mb-1">Registered Username</p>
+                                <p class="fw-bold text-dark mb-0">{{ request.user.username }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 border border-white h-100" style="background: rgba(255, 255, 255, 0.4);">
+                                <div class="d-flex align-items-center mb-3 text-secondary">
+                                    <i class="fas fa-shield-alt fa-2x me-3"></i>
+                                    <h5 class="fw-bold mb-0">Account Level</h5>
+                                </div>
+                                <p class="small text-muted mb-1">User Status</p>
+                                <p class="fw-bold text-dark mb-0">Verified Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                        <a href="{% url 'profile' %}" class="btn btn-gradient rounded-pill px-5 py-3">
+                            <i class="fas fa-user-circle me-2"></i>My Profile
+                        </a>
+                        <form action="{% url 'logout' %}" method="post" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger rounded-pill px-5 py-3">
+                                <i class="fas fa-power-off me-2"></i>Logout Now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="bg-dark bg-opacity-10 py-3 text-center border-top border-white">
+                    <p class="small text-muted mb-0">Need help? Visit our <a href="#" class="text-primary text-decoration-none fw-bold">Support Center</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
