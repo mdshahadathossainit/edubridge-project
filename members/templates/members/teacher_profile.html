@@ -1,63 +1,85 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row justify-content-center py-5">
-    <div class="col-md-6">
-        <div class="glass-card p-5">
-            <div class="text-center mb-5">
-                <div class="bg-primary d-inline-block p-3 rounded-circle text-white mb-3 shadow">
-                    <i class="fas fa-user-plus fa-2x"></i>
+<style>
+    .teacher-profile-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 40px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .profile-header {
+        background: linear-gradient(135deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+        padding: 4rem 2rem;
+        position: relative;
+    }
+    .profile-img-container {
+        margin-top: -80px;
+        position: relative;
+        z-index: 2;
+    }
+    .profile-img-container img, .profile-img-placeholder {
+        width: 180px;
+        height: 180px;
+        border: 8px solid white;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        object-fit: cover;
+    }
+    .bio-text {
+        line-height: 1.8;
+        color: #4a5568;
+    }
+    .stat-badge {
+        background: #f0f4ff;
+        color: #4f46e5;
+        padding: 10px 20px;
+        border-radius: 15px;
+        font-weight: 700;
+        display: inline-block;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="teacher-profile-card shadow-lg">
+        <div class="profile-header text-center">
+            <h1 class="display-4 fw-bold text-white mb-0">{{ teacher.name }}</h1>
+            <p class="text-white-50 fs-5 mb-0">{{ teacher.subject }}</p>
+        </div>
+        
+        <div class="profile-img-container text-center mb-4">
+            {% if teacher.photo %}
+                <img src="{{ teacher.photo.url }}" class="rounded-circle">
+            {% else %}
+                <div class="profile-img-placeholder rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto">
+                    <i class="fas fa-chalkboard-teacher fa-4x text-secondary"></i>
                 </div>
-                <h2 class="fw-bold">Create Account</h2>
-                <p class="text-secondary">Join the EduBridge community today</p>
-            </div>
+            {% endif %}
+        </div>
 
-            <form method="post" class="needs-validation" novalidate>
-                {% csrf_token %}
-                {% for field in form %}
-                    <div class="mb-4">
-                        <label class="form-label fw-bold small text-uppercase text-secondary">{{ field.label }}</label>
-                        {{ field }}
-                        {% if field.errors %}
-                            <div class="text-danger small mt-1">{{ field.errors }}</div>
-                        {% endif %}
-                        {% if field.help_text %}
-                            <div class="text-muted small mt-1" style="font-size: 0.75rem;">{{ field.help_text|safe }}</div>
-                        {% endif %}
+        <div class="p-5">
+            <div class="row g-5">
+                <div class="col-lg-8">
+                    <h3 class="fw-bold mb-4 text-dark"><i class="fas fa-book-open text-primary me-2"></i>About the Instructor</h3>
+                    <p class="bio-text fs-5">{{ teacher.bio }}</p>
+                    
+                    <div class="mt-5 d-flex gap-3">
+                        <div class="stat-badge"><i class="fas fa-star me-2"></i>4.9 Rating</div>
+                        <div class="stat-badge"><i class="fas fa-users me-2"></i>2,500+ Students</div>
                     </div>
-                {% endfor %}
-                <button type="submit" class="btn btn-gradient w-100 py-3 rounded-4 shadow-sm mt-3">
-                    Complete Registration <i class="fas fa-check-circle ms-2"></i>
-                </button>
-            </form>
-
-            <div class="text-center mt-5">
-                <p class="mb-2 text-secondary">Already have an account?</p>
-                <a href="{% url 'login' %}" class="fw-bold text-primary text-decoration-none">Login here</a>
+                </div>
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-4" style="background: #f8fafc;">
+                        <h5 class="fw-bold mb-4">Contact Info</h5>
+                        <div class="mb-3">
+                            <label class="small text-uppercase text-muted fw-bold">Email Address</label>
+                            <p class="fw-bold text-dark mb-0">{{ teacher.email }}</p>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button class="btn btn-gradient py-3">Follow Instructor</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    input, select {
-        width: 100% !important;
-        border-radius: 12px !important;
-        padding: 12px 20px !important;
-        border: 1px solid #e2e8f0 !important;
-        background: #f8fafc !important;
-        transition: all 0.3s;
-    }
-    input:focus, select:focus {
-        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important;
-        border-color: var(--primary) !important;
-        outline: none;
-    }
-    ul.errorlist {
-        list-style: none;
-        padding: 0;
-        margin-top: 5px;
-        color: #dc3545;
-        font-size: 0.8rem;
-    }
-</style>
 {% endblock %}
