@@ -7,8 +7,9 @@ class Profile(models.Model):
         ('student', 'Student'),
         ('admin', 'Admin'),
     )
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user_type = models.CharField(max_length=10, choices=USER_TYPES)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user_type = models.CharField(max_length=10, choices=USER_TYPES, default='student')
+    image = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.user_type}"
