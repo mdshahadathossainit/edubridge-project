@@ -4,8 +4,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Profile
+from .forms import RegistrationForm, UserUpdateForm
 from courses.models import Course, Enrollment, Homework
-from members.models import Teacher
+from members.models import Teacher, Student
 
 def login_view(request):
     if request.method == 'POST':
@@ -19,8 +20,10 @@ def login_view(request):
     return render(request, 'users/login.html', {'form': form})
 
 def logout_view(request):
-    logout(request)
-    return redirect('login')
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login')
+    return redirect('dashboard')
 
 def register_user(request):
     if request.method == 'POST':
@@ -72,3 +75,31 @@ def student_dashboard(request):
 def admin_dashboard(request):
     profiles = Profile.objects.all()
     return render(request, 'users/admin_dashboard.html', {'profiles': profiles})
+
+@login_required
+def profile_view(request):
+    return render(request, 'users/profile.html')
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated.')
+            return redirect('profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'users/edit_profile.html', {'form': form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Password changed.')
+            return redirect('profile')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'users/change_password.html', {'form': form})
