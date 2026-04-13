@@ -1,11 +1,151 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>All Teachers</h2>
-<ul>
-  {% for teacher in teachers %}
-    <li><a href="{% url 'teacher_profile' teacher.id %}">{{ teacher.name }}</a></li>
-  {% empty %}
-    <li>No teachers found.</li>
-  {% endfor %}
-</ul>
+<style>
+    .teachers-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .teachers-header h2 {
+        font-size: 3rem;
+        background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+    }
+
+    .teacher-card {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 30px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .teacher-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        z-index: -1;
+        transition: height 0.3s ease;
+    }
+
+    .teacher-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .teacher-card:hover::before {
+        height: 100%;
+        opacity: 0.05;
+    }
+
+    .img-container {
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+        border-radius: 50%;
+        margin-top: 20px;
+    }
+
+    .teacher-img {
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        border: 4px solid white;
+        border-radius: 50%;
+    }
+
+    .subject-badge {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-block;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 10px rgba(118, 75, 162, 0.3);
+    }
+
+    .btn-bright {
+        background: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 10px 25px;
+        border-radius: 50px;
+        transition: all 0.3s;
+    }
+
+    .btn-bright:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(252, 0, 255, 0.3);
+        color: white;
+    }
+
+    .bg-shape {
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 150px;
+        height: 150px;
+        background: rgba(79, 70, 229, 0.05);
+        border-radius: 50%;
+        z-index: -1;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="teachers-header">
+        <h2 class="fw-bold">Meet Our Expert Mentors</h2>
+        <p class="text-secondary lead">Learn from the best in the industry and scale your career.</p>
+    </div>
+
+    <div class="row g-5">
+        {% for teacher in teachers %}
+        <div class="col-md-6 col-lg-3">
+            <div class="teacher-card text-center p-4 shadow-sm h-100">
+                <div class="bg-shape"></div>
+                
+                <div class="img-container mb-3 shadow">
+                    {% if teacher.photo %}
+                        <img src="{{ teacher.photo.url }}" class="teacher-img" alt="{{ teacher.name }}">
+                    {% else %}
+                        <div class="teacher-img bg-light d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user-tie text-secondary fa-3x"></i>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="card-content">
+                    <span class="subject-badge">{{ teacher.subject }}</span>
+                    <h5 class="fw-bold mb-2" style="color: #1e293b;">{{ teacher.name }}</h5>
+                    <p class="text-secondary small mb-4 px-2">
+                        {{ teacher.bio|truncatewords:8 }}
+                    </p>
+                    <a href="{% url 'teacher_profile' teacher.id %}" class="btn btn-bright">
+                        View Profile <i class="fas fa-arrow-right ms-2 small"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="glass-card p-5">
+                <i class="fas fa-user-slash fa-4x text-light mb-3"></i>
+                <h4 class="text-secondary">No teachers are listed at the moment.</h4>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
