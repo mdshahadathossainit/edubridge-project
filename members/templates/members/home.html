@@ -2,12 +2,20 @@
 {% load static %}
 {% block content %}
 <style>
-    .hero-section {
-        padding: 60px 0 100px;
-        background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.1), transparent),
-                    radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.1), transparent);
+    /* Carousel Styles */
+    .carousel-item img {
+        height: 500px;
+        object-fit: cover;
         border-radius: 40px;
-        margin-bottom: 80px;
+    }
+    
+    .carousel-caption {
+        bottom: 10%;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .hero-badge {
@@ -58,20 +66,38 @@
     }
 </style>
 
-<div class="hero-section text-center position-relative overflow-hidden">
-    <div class="container">
-        <span class="hero-badge mb-3 d-inline-block">The Future of Learning</span>
-        <h1 class="display-3 fw-bolder mb-4">Elevate Your Skills with <br><span class="text-primary">Expert Mentorship</span></h1>
-        <p class="lead text-secondary mb-5 mx-auto" style="max-width: 700px;">
-            Join a community of 50,000+ students. Master new skills through high-quality video courses and live interaction.
-        </p>
-        <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a href="{% url 'course_list' %}" class="btn btn-gradient btn-lg px-5 py-3 fs-5">Explore All Courses</a>
-            <a href="{% url 'register' %}" class="btn btn-white btn-lg px-5 py-3 fs-5 border shadow-sm rounded-4">Join for Free</a>
+<!-- Hero Slideshow Section -->
+<div id="heroCarousel" class="carousel slide mb-5 shadow-lg" data-bs-ride="carousel" style="border-radius: 40px; overflow: hidden;">
+    <div class="carousel-inner">
+        {% for slide in slideshow_images %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ slide.image.url }}" class="d-block w-100" alt="{{ slide.caption }}">
+            <div class="carousel-caption d-none d-md-block mx-auto" style="max-width: 700px;">
+                <span class="hero-badge mb-3 d-inline-block bg-white text-primary">Featured News</span>
+                <h2 class="display-5 fw-bold text-white mb-3">{{ slide.caption }}</h2>
+                <a href="{% url 'course_list' %}" class="btn btn-gradient px-4 py-2">Start Learning</a>
+            </div>
         </div>
+        {% empty %}
+        <div class="carousel-item active">
+            <div class="d-flex align-items-center justify-content-center bg-primary text-white" style="height: 500px; border-radius: 40px;">
+                <div class="text-center">
+                    <h1 class="display-3 fw-bold">Welcome to EduBridge</h1>
+                    <p class="lead">Explore our courses to ignite your future.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
 </div>
 
+<!-- Trending Courses Section -->
 <div class="container mb-5">
     <div class="row align-items-center mb-5">
         <div class="col-lg-6">
@@ -120,6 +146,7 @@
     </div>
 </div>
 
+<!-- Features Section -->
 <section class="py-5 mt-5">
     <div class="container">
         <div class="glass-card p-5 text-center">
@@ -127,21 +154,21 @@
             <p class="mb-5 text-secondary">Our platform is fully responsive. Access your lessons on your phone, tablet, or desktop.</p>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="stat-card">
+                    <div class="stat-card shadow-sm">
                         <i class="fas fa-video fa-2x text-primary mb-3"></i>
                         <h4 class="fw-bold">High Quality</h4>
                         <p class="small text-muted mb-0">HD Video Tutorials</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="stat-card">
+                    <div class="stat-card shadow-sm">
                         <i class="fas fa-certificate fa-2x text-accent mb-3"></i>
                         <h4 class="fw-bold">Certificate</h4>
                         <p class="small text-muted mb-0">Global Recognition</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="stat-card">
+                    <div class="stat-card shadow-sm">
                         <i class="fas fa-infinity fa-2x text-secondary mb-3"></i>
                         <h4 class="fw-bold">Life Time</h4>
                         <p class="small text-muted mb-0">Unrestricted Access</p>
