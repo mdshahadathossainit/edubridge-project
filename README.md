@@ -1,65 +1,127 @@
-# edubridge-project
-# Edubridge - Online Learning Platform
-live demo: https://mdshahadathossainit.pythonanywhere.com/
+EduBridge - Online Learning Platform
 
+EduBridge is a comprehensive Django-based E-Learning system designed to bridge the gap between students and expert mentors. It provides a secure, visually appealing, and functional environment for course management, student enrollment, and academic tracking.
 
-#### 📚 [PaperFlow](https://github.com/mdshahadathossainit/paperflow) *(Latest)*
+Live Demo: mdshahadathossainit.pythonanywhere.com
+
+📸 Screenshots
+
+🏠 Home & Discovery
+
 <p align="center">
-  <img src="https://i.imgur.com/IYxgR4q.png" width="850" alt="PaperFlow Dashboard"/>
-  <br><br>
-  <img src="https://i.imgur.com/e4n5Dth.png" width="400"/>
-  <img src="https://i.imgur.com/53caT5C.png" width="400" alt="PaperFlow Features"/>
+<img src="https://www.google.com/search?q=https://i.imgur.com/W89g7ZU.png" width="400" alt="Home Page 1"/>
+<img src="https://www.google.com/search?q=https://i.imgur.com/YGHUwha.png" width="400" alt="Home Page 2"/>
 </p>
 
+📚 Course & Mentors
+
+<p align="center">
+<img src="https://www.google.com/search?q=https://i.imgur.com/k6HhOXq.png" width="45% " alt="Course List"/>
+<img src="https://www.google.com/search?q=https://i.imgur.com/GdeOd53.png" width="45%" alt="Teacher List"/>
+</p>
+
+👨‍🏫 Teacher Experience
+
+<p align="center">
+<img src="https://www.google.com/search?q=https://i.imgur.com/GdP4B7t.png" width="30%" alt="Teacher Details"/>
+<img src="https://www.google.com/search?q=https://i.imgur.com/Ubx0GFD.png" width="30%" alt="Teacher Profile"/>
+<img src="https://www.google.com/search?q=https://i.imgur.com/JqkeHS4.png" width="30%" alt="Teacher Dashboard"/>
+</p>
+
+🎓 Student Experience
+
+<p align="center">
+<img src="https://www.google.com/search?q=https://i.imgur.com/eTHZ2qY.png" width="850" alt="Student Dashboard"/>
+</p>
+
+🔐 Authentication & Security
+
+<p align="center">
+<img src="https://www.google.com/search?q=https://i.imgur.com/PHggkLk.png" width="45%" alt="Login Page"/>
+<img src="https://www.google.com/search?q=https://i.imgur.com/OSSDGYY.png" width="45%" alt="Signup Page"/>
+</p>
+
+⚙️ Administration
+
+<p align="center">
+<img src="https://www.google.com/search?q=https://i.imgur.com/U8baQkF.png" width="850" alt="Admin Panel"/>
+</p>
+
+✨ Key Features
+
+For Students
+
+Course Exploration: Browse through a wide variety of courses with detailed curricula.
+
+One-Click Enrollment: Seamless enrollment process for authenticated students.
+
+Personal Dashboard: Track enrolled courses, view progress, and check pending homework.
+
+Profile Management: Update personal information and profile pictures.
+
+For Teachers
+
+Course Creation: Dedicated interface to upload and manage course content.
+
+Homework Assignment: Ability to assign tasks to specific courses with due dates.
+
+Analytics Dashboard: Monitor the number of students enrolled in each class.
+
+Professional Profiles: Public profile pages showcasing bio, subject expertise, and ratings.
+
+For Administrators
+
+Advanced Control Center: Manage users, teachers, students, and site-wide settings.
+
+Success Stories: Manage and display student success stories on the homepage.
+
+UI Customization: Update slideshow images and site logos through the admin panel.
+
+🛠️ Technologies Used
+
+Backend: Python 3.x, Django Framework
+
+Frontend: HTML5, CSS3 (Custom Glassmorphism), JavaScript, Bootstrap 5
+
+Database: SQLite (Development)
+
+Icons & UI: FontAwesome 6.4, Google Fonts (Plus Jakarta Sans)
+
+Authentication: Django Auth System (Custom Signals for Profile creation)
+
+🚀 Installation and Setup
+
+Clone the repository:
+
+git clone [https://github.com/mdshahadathossainit/edubridge-project.git](https://github.com/mdshahadathossainit/edubridge-project.git)
+cd edubridge-project
 
 
-### About the Project
+Create and activate a virtual environment:
 
-Edubridge is a Django-based online learning platform. The primary goal of this project is to create an effective and user-friendly digital learning environment for both students and teachers. Users can enroll in various courses, and teachers can upload and manage their course content.
-
-### Key Features
-
-* User profiles and dashboards for both students and teachers.
-* Course creation, management, and enrollment functionalities.
-* Secure user authentication system.
-* Easy data management through Django Admin.
-
-### Technologies Used
-
-This project was built using the following technologies:
-
-* **Backend:** Python, Django
-* **Frontend:** HTML5, CSS3, JavaScript, Bootstrap 5
-* **Database:** SQLite
-* **Other Tools:** Django Admin, Graphviz
-
-### Installation and Setup
-
-To run this project on your local machine, follow these steps:
-
-1.  Clone the repository:
-    `git clone https://github.com/mdshahadathossainit/edubridge-project.git`
-
-2.  Navigate to the project folder:
-    `cd edubridge-project`
-
-3.  Create and activate a virtual environment:
-    `python -m venv venv`
-    `venv\Scripts\activate`
-
-4.  Install the required dependencies:
-    `pip install -r requirements.txt`
-
-5.  Run database migrations:
-    `python manage.py makemigrations`
-    `python manage.py migrate`
-
-6.  Start the development server:
-    `python manage.py runserver`
-
-### Contact
-
-If you have any questions, feel free to contact me.
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
 
 
--   **GitHub:** [mdshahadathossainit](https://github.com/mdshahadathossainit)
+Install dependencies:
+
+pip install -r requirements.txt
+
+
+Database Setup:
+
+python manage.py makemigrations
+python manage.py migrate
+
+
+Create Admin User:
+
+python manage.py createsuperuser
+
+
+Run Server:
+
+python manage.py runserver
