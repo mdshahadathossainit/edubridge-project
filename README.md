@@ -1,127 +1,146 @@
-EduBridge - Online Learning Platform
+
+# 🎓 EduBridge - Online Learning Platform
 
 EduBridge is a comprehensive Django-based E-Learning system designed to bridge the gap between students and expert mentors. It provides a secure, visually appealing, and functional environment for course management, student enrollment, and academic tracking.
 
-Live Demo: mdshahadathossainit.pythonanywhere.com
+🌐 **Live Demo:** [mdshahadathossainit.pythonanywhere.com](https://mdshahadathossainit.pythonanywhere.com/)
 
-📸 Screenshots
+---
 
-🏠 Home & Discovery
+## 🖼️ Project Screenshots
 
+### 🖥️ Main Interfaces
+| **Admin Dashboard** | **Course List** |
+| :---: | :---: |
+| <img src="https://i.imgur.com/eshRriC.jpg" width="350" alt="Admin Page"/> | <img src="https://i.imgur.com/tOrToF3.jpg" width="350" alt="Course List Page"/> |
+
+### 🏠 Landing Page (Mobile/Responsive View)
 <p align="center">
-<img src="https://www.google.com/search?q=https://i.imgur.com/W89g7ZU.png" width="400" alt="Home Page 1"/>
-<img src="https://www.google.com/search?q=https://i.imgur.com/YGHUwha.png" width="400" alt="Home Page 2"/>
+  <img src="https://i.imgur.com/AEYKFTl.jpg" width="180" alt="Home Page 1"/> 
+  <img src="https://i.imgur.com/A0aV2KE.jpg" width="180" alt="Home Page 2"/>
 </p>
 
-📚 Course & Mentors
+### 🔐 Authentication & Profiles
+| **Login Page** | **Signup Page** |
+| :---: | :---: |
+| <img src="https://i.imgur.com/ndiTgfY.jpg" width="350" alt="Login Page"/> | <img src="https://i.imgur.com/R48deOZ.jpg" width="350" alt="Signup Page"/> |
+
+| **Teacher List** | **Teacher Details** |
+| :---: | :---: |
+| <img src="https://i.imgur.com/5aS94Nz.jpg" width="350" alt="Teacher List"/> | <img src="https://i.imgur.com/VeF8UYL.jpg" width="350" alt="Teacher Details"/> |
+
+### 📊 User Dashboards
+| **Teacher Dashboard (1)** | **Teacher Dashboard (2)** |
+| :---: | :---: |
+| <img src="https://i.imgur.com/BuUatQG.jpg" width="350" alt="Teacher Dashboard 1"/> | <img src="https://i.imgur.com/TokeTAI.jpg" width="350" alt="Teacher Dashboard 2"/> |
 
 <p align="center">
-<img src="https://www.google.com/search?q=https://i.imgur.com/k6HhOXq.png" width="45% " alt="Course List"/>
-<img src="https://www.google.com/search?q=https://i.imgur.com/GdeOd53.png" width="45%" alt="Teacher List"/>
+  <b>Student Profile / Dashboard</b><br>
+  <img src="https://i.imgur.com/IYzIGVk.jpg" width="400" alt="Student Dashboard"/>
 </p>
 
-👨‍🏫 Teacher Experience
+---
 
-<p align="center">
-<img src="https://www.google.com/search?q=https://i.imgur.com/GdP4B7t.png" width="30%" alt="Teacher Details"/>
-<img src="https://www.google.com/search?q=https://i.imgur.com/Ubx0GFD.png" width="30%" alt="Teacher Profile"/>
-<img src="https://www.google.com/search?q=https://i.imgur.com/JqkeHS4.png" width="30%" alt="Teacher Dashboard"/>
-</p>
+## ✨ Key Features
 
-🎓 Student Experience
+* **Multi-Role Dashboards:** Separate, tailored experiences for Students, Teachers, and Admins.
+* **Automatic Profile Creation:** Uses Django **Signals** to create Teacher/Student profiles instantly upon registration.
+* **Course Management:** Teachers can create courses, and students can enroll with a single click.
+* **Homework System:** Teachers can post homework to specific courses; students see them on their personal dashboard.
+* **Glassmorphism UI:** Modern, clean, and responsive design using **Bootstrap 5** and custom CSS.
+* **Site Management:** Administrators can update logos, slideshows, and site names directly from the Admin UI.
 
-<p align="center">
-<img src="https://www.google.com/search?q=https://i.imgur.com/eTHZ2qY.png" width="850" alt="Student Dashboard"/>
-</p>
+---
 
-🔐 Authentication & Security
+## 🛠️ Technologies Used
 
-<p align="center">
-<img src="https://www.google.com/search?q=https://i.imgur.com/PHggkLk.png" width="45%" alt="Login Page"/>
-<img src="https://www.google.com/search?q=https://i.imgur.com/OSSDGYY.png" width="45%" alt="Signup Page"/>
-</p>
+### **Backend**
+* **Python 3.x**
+* **Django Framework:** The core web framework.
+* **Django-extensions:** For advanced management commands and graphing.
+* **Pillow:** For image processing and thumbnails.
 
-⚙️ Administration
+### **Frontend**
+* **HTML5 & CSS3:** With custom Glassmorphism effects.
+* **Bootstrap 5:** For responsive layouts and UI components.
+* **JavaScript:** For dynamic UI interactions.
+* **FontAwesome 6.4:** For high-quality iconography.
+* **Google Fonts:** (Plus Jakarta Sans).
 
-<p align="center">
-<img src="https://www.google.com/search?q=https://i.imgur.com/U8baQkF.png" width="850" alt="Admin Panel"/>
-</p>
+### **Database & Security**
+* **SQLite:** Used for development data storage.
+* **Django Auth:** Secure login, registration, and password management.
 
-✨ Key Features
+---
 
-For Students
+## 📁 Project Structure
 
-Course Exploration: Browse through a wide variety of courses with detailed curricula.
+```text
+└── mdshahadathossainit-edubridge-project/
+    ├── courses/            # Course management and enrollment logic
+    │   ├── templates/      # Course-related HTML templates
+    │   ├── admin.py        # Course & Homework admin configuration
+    │   ├── forms.py        # Course & Homework assignment forms
+    │   ├── models.py       # Course, Enrollment, Homework schemas
+    │   ├── urls.py         # Course app routing
+    │   └── views.py        # Logic for course list, detail, and homework
+    ├── edubridge/          # Core project settings and configuration
+    │   ├── settings.py     # Global settings (Database, Apps, Media)
+    │   ├── urls.py         # Master routing
+    │   └── wsgi.py
+    ├── media/              # User-uploaded files (Course thumbnails, Profile pics)
+    ├── members/            # Teacher/Student profile and site settings logic
+    │   ├── templates/      # Landing page and teacher profile templates
+    │   ├── admin.py        # Custom Teacher/Student admin panels
+    │   ├── models.py       # Site settings and Success Story schemas
+    │   └── views.py        # Logic for landing page and profiles
+    ├── users/              # Authentication and account management
+    │   ├── templates/      # Login, Register, Dashboards templates
+    │   ├── signals.py      # Profile auto-creation logic
+    │   └── views.py        # Multi-role dashboard logic (Admin/Teacher/Student)
+    ├── manage.py
+    ├── requirements.txt
+    └── README.md
+```
 
-One-Click Enrollment: Seamless enrollment process for authenticated students.
+---
 
-Personal Dashboard: Track enrolled courses, view progress, and check pending homework.
+## 🚀 Installation and Setup
 
-Profile Management: Update personal information and profile pictures.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/mdshahadathossainit/edubridge-project.git](https://github.com/mdshahadathossainit/edubridge-project.git)
+   cd edubridge-project
+   ```
 
-For Teachers
+2. **Virtual Environment:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use: venv\Scripts\activate
+   ```
 
-Course Creation: Dedicated interface to upload and manage course content.
+3. **Install Dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Homework Assignment: Ability to assign tasks to specific courses with due dates.
+4. **Database Migration:**
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
 
-Analytics Dashboard: Monitor the number of students enrolled in each class.
+5. **Run Server:**
+   ```bash
+   python manage.py runserver
+   ```
 
-Professional Profiles: Public profile pages showcasing bio, subject expertise, and ratings.
+---
 
-For Administrators
+## 📩 Contact
 
-Advanced Control Center: Manage users, teachers, students, and site-wide settings.
+**Md Shahadat Hossain** *Software Developer | AI/ML Researcher*
 
-Success Stories: Manage and display student success stories on the homepage.
-
-UI Customization: Update slideshow images and site logos through the admin panel.
-
-🛠️ Technologies Used
-
-Backend: Python 3.x, Django Framework
-
-Frontend: HTML5, CSS3 (Custom Glassmorphism), JavaScript, Bootstrap 5
-
-Database: SQLite (Development)
-
-Icons & UI: FontAwesome 6.4, Google Fonts (Plus Jakarta Sans)
-
-Authentication: Django Auth System (Custom Signals for Profile creation)
-
-🚀 Installation and Setup
-
-Clone the repository:
-
-git clone [https://github.com/mdshahadathossainit/edubridge-project.git](https://github.com/mdshahadathossainit/edubridge-project.git)
-cd edubridge-project
-
-
-Create and activate a virtual environment:
-
-python -m venv venv
-# Windows:
-venv\Scripts\activate
-# Linux/Mac:
-source venv/bin/activate
-
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-
-Database Setup:
-
-python manage.py makemigrations
-python manage.py migrate
-
-
-Create Admin User:
-
-python manage.py createsuperuser
-
-
-Run Server:
-
-python manage.py runserver
+* **GitHub:** [@mdshahadathossainit](https://github.com/mdshahadathossainit)
+* **Live Site:** [EduBridge Learning Hub](https://mdshahadathossainit.pythonanywhere.com/)
+```
